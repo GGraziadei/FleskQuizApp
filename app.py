@@ -165,10 +165,10 @@ def quiz():
 
 @app.route('/leaderboard')
 def leaderboard():
-    # Implement leaderboard logic here
-    return render_template('leaderboard.html')
+    users = User.query.order_by(User.score.desc()).all()
+    return render_template('leaderboard.html', users=users)
 
 if __name__ == '__main__':
     with app.app_context():
         db.create_all()
-    app.run(debug=True)
+    app.run()
