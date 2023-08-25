@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<main class="container">
+
+    <form method="POST">
+            {{ form.hidden_tag() }}
+            {% for field in form %}
+                {% if field.type == 'RadioField' %}
+                    <div class="form-group">
+                        <h3>{{ form[field.name].label }}</h3>
+                        <div class="form-check">
+                            {% for choice in field.choices %}
+                                <input class="form-check-input" type="radio" name="{{ field.name }}" id="{{ field.id }}_{{ loop.index }}" value="{{ choice[0] }}">
+                                <label class="form-check-label" for="{{ field.id }}_{{ loop.index }}">{{ choice[1] }}</label><br>
+                                <hr>
+                            {% endfor %}
+                        </div>
+
+                        {% if field.errors %}
+                            <ul class="errors">
+                                {% for error in field.errors %}
+                                    <li>{{ error }}</li>
+                                {% endfor %}
+                            </ul>
+                        {% endif %}
+                    </div>
+                {% endif %}
+            {% endfor %}
+
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+
+</main>
+
+{% endblock %}

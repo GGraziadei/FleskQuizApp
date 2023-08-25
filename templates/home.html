@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<main class="container">
+    <h1>Welcome to the Quiz App!</h1>
+
+    {% if current_user.is_authenticated %}
+        <p>Hello, {{ current_user.username }}! Get ready to take the quiz.</p>
+    {% else %}
+        <p>Please register or login to start the quiz.</p>
+    {% endif %}
+    
+    <section id="weather">
+        <h2>Weather</h2>
+        <form method="GET">
+            <div class="form-group">
+                <label for="city">City</label>
+                <input type="text" class="form-control" id="city" name="city" required>
+            </div>
+            <br>
+            <button class="btn btn-primary" type="submit">Update</button>
+
+        </form>
+        
+        {% if weather_data %}
+            <table class="table">
+                <thead>
+                  <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Day</th>
+                    <th scope="col">Temperature</th>
+                    <th scope="col">Description</th>
+                  </tr>
+                </thead>
+                <tbody>
+                    {% for d in weather_data %}
+                        <tr>
+                            <th scope="row"></th>
+                            <td>{{d.date}}</td>
+                            <td>{{d.temp}}</td>
+                            <td>{{d.description}}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+              </table>  
+        
+        {% else %}
+            <p>No weather data available.</p>
+            
+        {% endif %}
+    </section>
+</main>
+
+{% endblock %}
